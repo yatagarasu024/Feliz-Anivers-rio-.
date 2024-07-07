@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Aniversário</title>
+    <style>
+        body {
+            background-color: yellow;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .envelope {
+            width: 300px;
+            height: 200px;
+            background-color: white;
+            border: 2px solid black;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .envelope:hover {
+            transform: scale(1.05);
+        }
+        .envelope::before, .envelope::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+        .envelope::before {
+            top: -20px;
+            left: 0;
+            border-width: 0 150px 20px 150px;
+            border-color: transparent transparent white transparent;
+        }
+        .envelope::after {
+            bottom: -20px;
+            left: 0;
+            border-width: 20px 150px 0 150px;
+            border-color: white transparent transparent transparent;
+        }
+        .message {
+            display: none;
+            font-size: 20px;
+        }
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+        .button.open {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .button.reset {
+            background-color: #f44336;
+            color: white;
+        }
+        .button.open:hover {
+            background-color: #45a049;
+        }
+        .button.reset:hover {
+            background-color: #e53935;
+        }
+        @keyframes confetti {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+        .confetti-piece {
+            position: fixed;
+            top: 0;
+            width: 10px;
+            height: 20px;
+            background-color: #ff6347;
+            animation: confetti 2s linear infinite;
+        }
+        .star {
+            width: 5px;
+            height: 5px;
+            background-color: gold;
+            position: absolute;
+            animation: star-fall 2s linear infinite;
+        }
+        @keyframes star-fall {
+            0% { transform: translateY(-100px); }
+            100% { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+<body>
+    <div class="envelope">
+        <div class="text">Clique em "Abrir"</div>
+        <div class="message">Feliz aniversário pai!</div>
+    </div>
+    <div class="buttons">
+        <button class="button open" onclick="showMessage()">Abrir</button>
+        <button class="button reset" onclick="resetPage()">Resetar</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        function showMessage() {
+            document.querySelector('.text').style.display = 'none';
+            document.querySelector('.message').style.display = 'block';
+
+            // Efeito de confetes
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+
+            // Efeito de estrelas
+            for (let i = 0; i < 30; i++) {
+                let star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                document.body.appendChild(star);
+            }
+        }
+
+        function resetPage() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>
